@@ -29,10 +29,10 @@ gem "bootsnap", require: false
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin Ajax possible
 # gem "rack-cors"
 
-gem 'sorbet-runtime'
+gem "sorbet-runtime"
 
 group :development do
-  gem 'sorbet'
+  gem "sorbet"
 end
 
 group :development, :test do
@@ -48,5 +48,5 @@ group :development, :test do
   gem "rspec-rails"
   gem "factory_bot_rails"
 
-  gem 'tapioca', require: false
+  gem "tapioca", require: false
 end

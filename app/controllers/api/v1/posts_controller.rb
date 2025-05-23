@@ -6,20 +6,20 @@ class Api::V1::PostsController < ApplicationController
   sig { void }
   def index
     posts = Post.all
-    render json: posts
+    render json: posts, status: :ok
   end
 
   sig { void }
   def user_posts
     posts = Post.where(user_id: params[:user_id])
-    render json: posts
+    render json: posts, status: :ok
   end
 
   sig { void }
   def show
-    @post = Post.find(params[:id])
-    render json: @post
+    post = Post.find(params[:id])
+    render json: post
   rescue ActiveRecord::RecordNotFound
-    render json: { error: '投稿が見つかりません' }, status: :not_found
+    render json: { error: "Post not found" }, status: :not_found
   end
 end

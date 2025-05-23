@@ -6,6 +6,7 @@
 
 
 class User
+  include GeneratedAssociationMethods
   include GeneratedAttributeMethods
   extend CommonRelationMethods
   extend GeneratedRelationMethods
@@ -325,6 +326,22 @@ class User
 
     sig { returns(::User) }
     def third_to_last!; end
+  end
+
+  module GeneratedAssociationMethods
+    sig { returns(T::Array[T.untyped]) }
+    def post_ids; end
+
+    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
+    def post_ids=(ids); end
+
+    # This method is created by ActiveRecord on the `User` class because it declared `has_many :posts`.
+    # 🔗 [Rails guide for `has_many` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-association)
+    sig { returns(::Post::PrivateCollectionProxy) }
+    def posts; end
+
+    sig { params(value: T::Enumerable[::Post]).void }
+    def posts=(value); end
   end
 
   module GeneratedAssociationRelationMethods

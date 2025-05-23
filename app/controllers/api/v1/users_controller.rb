@@ -7,7 +7,7 @@ class Api::V1::UsersController < ApplicationController
   def index
     users = User.all
 
-    if users
+    if users.any?
       render json: users, status: :ok
     else
       render json: { error: "Users not found" }, status: :not_found

@@ -50,4 +50,4 @@ jobs:
           bundler-cache: true
 
       - name: Run Sorbet type checker
-        run: bin/srb tc
+        run: srb tc

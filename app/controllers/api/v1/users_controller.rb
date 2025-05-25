@@ -1,14 +1,20 @@
+# typed: true
+
 class Api::V1::UsersController < ApplicationController
+  extend T::Sig
+
+  sig { void }
   def index
     users = User.all
 
-    if users
+    if users.any?
       render json: users, status: :ok
     else
       render json: { error: "Users not found" }, status: :not_found
     end
   end
 
+  sig { void }
   def show
     user = User.find_by(id: params[:id])
 
@@ -19,6 +25,7 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
+  sig { void }
   def create
     user = User.new(user_params)
 
@@ -29,6 +36,7 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
+  sig { void }
   def update
     user = User.find_by(id: params[:id])
 
@@ -43,6 +51,7 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
+  sig { void }
   def destroy
     user = User.find_by(id: params[:id])
 
@@ -56,7 +65,8 @@ class Api::V1::UsersController < ApplicationController
 
   private
 
+  sig { returns(T::Hash[Symbol, T.untyped]) }
   def user_params
-    params.require(:user).permit(:name, :email)
+    params.require(:user).permit(:name, :email).to_h
   end
 end

@@ -67,6 +67,6 @@ class Api::V1::UsersController < ApplicationController
 
   sig { returns(T::Hash[Symbol, T.untyped]) }
   def user_params
-    params.require(:user).permit(:name, :email).to_h
+    params.require(:user).permit(:name, :email, :password).to_h
   end
 end

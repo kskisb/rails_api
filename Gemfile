@@ -32,6 +32,9 @@ gem "bootsnap", require: false
 
 gem "sorbet-runtime"
 
+gem "jwt"
+gem "bcrypt"
+
 group :development do
   gem "sorbet"
 end

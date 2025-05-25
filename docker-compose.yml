@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: myapp_development
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    environment:
+      RAILS_ENV: development
+      DATABASE_URL: postgresql://postgres:password@db:5432/myapp_development
+      REDIS_URL: redis://redis:6379/0
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/rails
+      - bundle_cache:/usr/local/bundle
+    depends_on:
+      - db
+      - redis
+    stdin_open: true
+    tty: true
+
+volumes:
+  postgres_data:
+  redis_data:
+  bundle_cache:

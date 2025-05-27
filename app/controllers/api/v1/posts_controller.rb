@@ -1,6 +1,7 @@
 # typed: true
 
 class Api::V1::PostsController < ApplicationController
+  before_action :authenticate, only: [ :create, :update, :destroy ]
   extend T::Sig
 
   sig { void }
@@ -25,23 +26,17 @@ class Api::V1::PostsController < ApplicationController
 
   sig { void }
   def create
-    user = User.find_by(id: params[:user_id])
-
-    if user
-      post = user.posts.build(content: post_params[:content])
-      if post.save
-        render json: post, status: :created
-      else
-        render json: { errors: post.errors.full_messages }, status: :unprocessable_entity
-      end
+    post = @current_user.posts.build(content: post_params[:content])
+    if post.save
+      render json: post, status: :created
     else
-      render json: { error: "User not found" }, status: :not_found
+      render json: { errors: post.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   sig { void }
   def update
-    post = Post.find_by(id: params[:id])
+    post = @current_user.posts.find_by(id: params[:id])
 
     if post
       if post.update(post_params)
@@ -56,7 +51,7 @@ class Api::V1::PostsController < ApplicationController
 
   sig { void }
   def destroy
-    post = Post.find_by(id: params[:id])
+    post = @current_user.posts.find_by(id: params[:id])
 
     if post
       post.destroy
@@ -70,6 +65,6 @@ class Api::V1::PostsController < ApplicationController
 
   sig { returns(T::Hash[Symbol, T.untyped]) }
   def post_params
-    params.require(:post).permit(:content, :user_id).to_h
+    params.require(:post).permit(:content).to_h
   end
 end

@@ -1,6 +1,7 @@
 # typed: true
 
 class Api::V1::UsersController < ApplicationController
+  before_action :authenticate, only: [ :me, :update, :destroy ]
   extend T::Sig
 
   sig { void }
@@ -30,21 +31,25 @@ class Api::V1::UsersController < ApplicationController
     user = User.new(user_params)
 
     if user.save
-      render json: user, status: :created
+      @token = create_token(user.id)
+      render json: { user: user, token: @token }, status: :created
     else
       render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   sig { void }
-  def update
-    user = User.find_by(id: params[:id])
+  def me
+    render json: @current_user, status: :ok
+  end
 
-    if user
-      if user.update(user_params)
-        render json: user, status: :ok
+  sig { void }
+  def update
+    if @current_user
+      if @current_user.update(user_params)
+        render json: @current_user, status: :ok
       else
-        render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
+        render json: { errors: @current_user.errors.full_messages }, status: :unprocessable_entity
       end
     else
       render json: { error: "User not found" }, status: :not_found
@@ -53,10 +58,8 @@ class Api::V1::UsersController < ApplicationController
 
   sig { void }
   def destroy
-    user = User.find_by(id: params[:id])
-
-    if user
-      user.destroy
+    if @current_user
+      @current_user.destroy
       render json: { message: "User deleted successfully" }, status: :ok
     else
       render json: { error: "User not found" }, status: :not_found

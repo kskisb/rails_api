@@ -28,9 +28,12 @@ gem "bootsnap", require: false
 # gem "image_processing", "~> 1.2"
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin Ajax possible
-# gem "rack-cors"
+gem "rack-cors"
 
 gem "sorbet-runtime"
+
+gem "jwt"
+gem "bcrypt"
 
 group :development do
   gem "sorbet"

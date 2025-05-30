@@ -38,7 +38,7 @@ class Api::V1::RelationshipsController < ApplicationController
   sig { void }
   def following
     user = User.find_by(id: params[:id])
-    following = user.following
+    following = T.must(user).following
 
     render json: following, status: :ok
   rescue ActiveRecord::RecordNotFound
@@ -48,7 +48,7 @@ class Api::V1::RelationshipsController < ApplicationController
   sig { void }
   def followers
     user = User.find_by(id: params[:id])
-    followers = user.followers
+    followers = T.must(user).followers
 
     render json: followers, status: :ok
   rescue ActiveRecord::RecordNotFound

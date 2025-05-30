@@ -8,12 +8,12 @@ class Api::V1::RelationshipsController < ApplicationController
   def create
     user = User.find(params[:followed_id])
 
-    if @user == @current_user
+    if user == @current_user
       render json: { error: "Cannot follow yourself" }, status: :unprocessable_entity
       return
     end
 
-    if @current_user.following?(@user)
+    if @current_user.following?(user)
       render json: { error: "Already following this user" }, status: :unprocessable_entity
       return
     end

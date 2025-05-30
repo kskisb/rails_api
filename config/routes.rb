@@ -7,8 +7,15 @@ Rails.application.routes.draw do
       get "users/me", to: "users#me"
 
       get "users/:user_id/posts", to: "posts#user_posts"
-      resources :users, only: [ :index, :show, :create, :update, :destroy ]
+      resources :users, only: [ :index, :show, :create, :update, :destroy ] do
+        member do
+          get "following", to: "relationships#following"
+          get "followers", to: "relationships#followers"
+        end
+      end
+
       resources :posts, only: [ :index, :show, :create, :update, :destroy ]
+      resources :relationships, only: [ :create, :destroy ]
     end
   end
 end

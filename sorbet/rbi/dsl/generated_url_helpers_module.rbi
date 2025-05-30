@@ -10,7 +10,22 @@ module GeneratedUrlHelpersModule
   include ::ActionDispatch::Routing::PolymorphicRoutes
 
   sig { params(args: T.untyped).returns(String) }
+  def api_v1_auth_login_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def api_v1_post_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def api_v1_posts_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def api_v1_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def api_v1_user_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def api_v1_users_me_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def api_v1_users_url(*args); end

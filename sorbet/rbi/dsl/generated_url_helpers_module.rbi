@@ -13,6 +13,12 @@ module GeneratedUrlHelpersModule
   def api_v1_auth_login_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def api_v1_post_like_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def api_v1_post_liked_users_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def api_v1_post_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -26,6 +32,9 @@ module GeneratedUrlHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def api_v1_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def api_v1_user_likes_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def api_v1_user_url(*args); end

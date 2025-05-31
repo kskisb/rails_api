@@ -408,6 +408,34 @@ class User
     def following_ids=(ids); end
 
     sig { returns(T::Array[T.untyped]) }
+    def like_ids; end
+
+    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
+    def like_ids=(ids); end
+
+    sig { returns(T::Array[T.untyped]) }
+    def liked_post_ids; end
+
+    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
+    def liked_post_ids=(ids); end
+
+    # This method is created by ActiveRecord on the `User` class because it declared `has_many :liked_posts, through: :likes`.
+    # 🔗 [Rails guide for `has_many_through` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-through-association)
+    sig { returns(::Post::PrivateCollectionProxy) }
+    def liked_posts; end
+
+    sig { params(value: T::Enumerable[::Post]).void }
+    def liked_posts=(value); end
+
+    # This method is created by ActiveRecord on the `User` class because it declared `has_many :likes`.
+    # 🔗 [Rails guide for `has_many` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-association)
+    sig { returns(::Like::PrivateCollectionProxy) }
+    def likes; end
+
+    sig { params(value: T::Enumerable[::Like]).void }
+    def likes=(value); end
+
+    sig { returns(T::Array[T.untyped]) }
     def passive_relationship_ids; end
 
     sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }

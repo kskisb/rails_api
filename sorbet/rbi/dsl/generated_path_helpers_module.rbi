@@ -16,6 +16,12 @@ module GeneratedPathHelpersModule
   def api_v1_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def api_v1_post_like_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def api_v1_post_liked_users_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def api_v1_post_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -26,6 +32,9 @@ module GeneratedPathHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def api_v1_relationships_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def api_v1_user_likes_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def api_v1_user_path(*args); end

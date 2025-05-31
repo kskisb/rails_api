@@ -338,6 +338,34 @@ class Post
     sig { params(args: T.untyped, blk: T.untyped).returns(::User) }
     def create_user!(*args, &blk); end
 
+    sig { returns(T::Array[T.untyped]) }
+    def like_ids; end
+
+    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
+    def like_ids=(ids); end
+
+    sig { returns(T::Array[T.untyped]) }
+    def liked_user_ids; end
+
+    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
+    def liked_user_ids=(ids); end
+
+    # This method is created by ActiveRecord on the `Post` class because it declared `has_many :liked_users, through: :likes`.
+    # 🔗 [Rails guide for `has_many_through` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-through-association)
+    sig { returns(::User::PrivateCollectionProxy) }
+    def liked_users; end
+
+    sig { params(value: T::Enumerable[::User]).void }
+    def liked_users=(value); end
+
+    # This method is created by ActiveRecord on the `Post` class because it declared `has_many :likes`.
+    # 🔗 [Rails guide for `has_many` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-association)
+    sig { returns(::Like::PrivateCollectionProxy) }
+    def likes; end
+
+    sig { params(value: T::Enumerable[::Like]).void }
+    def likes=(value); end
+
     sig { returns(T.nilable(::User)) }
     def reload_user; end
 

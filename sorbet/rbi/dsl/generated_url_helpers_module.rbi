@@ -13,13 +13,28 @@ module GeneratedUrlHelpersModule
   def api_v1_auth_login_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def api_v1_post_like_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def api_v1_post_liked_users_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def api_v1_post_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def api_v1_posts_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def api_v1_relationship_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def api_v1_relationships_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def api_v1_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def api_v1_user_likes_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def api_v1_user_url(*args); end
@@ -29,6 +44,12 @@ module GeneratedUrlHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def api_v1_users_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def followers_api_v1_user_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def following_api_v1_user_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def new_rails_conductor_inbound_email_source_url(*args); end

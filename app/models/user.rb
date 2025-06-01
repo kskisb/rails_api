@@ -1,3 +1,5 @@
+# typed: true
+
 class User < ApplicationRecord
   has_many :posts, dependent: :destroy
   has_many :active_relationships, class_name: "Relationship",
@@ -11,7 +13,7 @@ class User < ApplicationRecord
   has_many :likes, dependent: :destroy
   has_many :liked_posts, through: :likes, source: :post
 
-  before_save { self.email = email.downcase }
+  before_save { self.email = T.must(email).downcase }
   has_secure_password
   validates :password, presence: true, allow_nil: true
   validates :name, presence: true, length: { maximum: 50 }
@@ -25,7 +27,7 @@ class User < ApplicationRecord
   end
 
   def unfollow(other_user)
-    active_relationships.find_by(followed_id: other_user.id).destroy
+    active_relationships.find_by(followed_id: other_user.id)&.destroy
   end
 
   def following?(other_user)

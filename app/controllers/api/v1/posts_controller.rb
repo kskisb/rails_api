@@ -6,20 +6,20 @@ class Api::V1::PostsController < ApplicationController
 
   sig { void }
   def index
-    posts = Post.all
-    render json: posts, status: :ok
+    posts = Post.includes(:user).order(created_at: :desc).all
+    render json: posts.as_json(include: { user: { only: [:id, :name] } }), status: :ok
   end
 
   sig { void }
   def user_posts
-    posts = Post.where(user_id: params[:user_id])
-    render json: posts, status: :ok
+    posts = Post.includes(:user).where(user_id: params[:user_id]).order(created_at: :desc)
+    render json: posts.as_json(include: { user: { only: [:id, :name] } }), status: :ok
   end
 
   sig { void }
   def show
-    post = Post.find(params[:id])
-    render json: post
+    post = Post.includes(:user).find(params[:id])
+    render json: post.as_json(include: { user: { only: [:id, :name] } }), status: :ok
   rescue ActiveRecord::RecordNotFound
     render json: { error: "Post not found" }, status: :not_found
   end

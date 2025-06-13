@@ -87,8 +87,8 @@ class Api::V1::PostsController < ApplicationController
       created_at: post.created_at,
       updated_at: post.updated_at,
       user: {
-        id: post.user.id,
-        name: post.user.name
+        id: T.must(post.user).id,
+        name: T.must(post.user).name
       },
       likes_count: post.likes_count,
       liked_by_current_user: @current_user.liked?(post)

@@ -53,7 +53,22 @@ class Api::V1::LikesController < ApplicationController
   sig { void }
   def liked_posts
     user = User.find(params[:user_id])
-    posts = user.liked_posts
+
+    posts = Post.joins(:likes)
+                .where(likes: { user_id: user.id })
+                .includes(:user)
+                .order('likes.created_at DESC')
+
+    post_like_counts = Like.where(post_id: posts.map(&:id)).group(:post_id).count
+    current_user_liked_post_ids = @current_user ? Set.new(@current_user.likes.pluck(:post_id)) : Set.new
+
+    posts_json = posts.map do |post|
+      post.as_json(include: { user: { only: [:id, :name] } })
+        .merge({
+          likes_count: post_like_counts[post.id] || 0,
+          liked_by_current_user: current_user_liked_post_ids.include?(post.id)
+        })
+    end
 
     render json: posts, status: :ok
   rescue ActiveRecord::RecordNotFound

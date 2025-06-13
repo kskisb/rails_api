@@ -3,10 +3,13 @@ updates:
 - package-ecosystem: bundler
   directory: "/"
   schedule:
-    interval: daily
+    interval: weekly
   open-pull-requests-limit: 10
+  ignore:
+    - dependency-name: "sorbet"
+      update-types: ["version-update:semver-minor", "version-update:semver-patch"]
 - package-ecosystem: github-actions
   directory: "/"
   schedule:
-    interval: daily
+    interval: weekly
   open-pull-requests-limit: 10

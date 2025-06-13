@@ -12,10 +12,23 @@ Rails.application.routes.draw do
           get "following", to: "relationships#following"
           get "followers", to: "relationships#followers"
         end
+
+        get "likes", to: "likes#liked_posts"
       end
 
-      resources :posts, only: [ :index, :show, :create, :update, :destroy ]
-      resources :relationships, only: [ :create, :destroy ]
+      resources :posts, only: [ :index, :show, :create, :update, :destroy ] do
+        collection do
+          get "following", to: "posts#following_posts"
+        end
+        post "like", to: "likes#create"
+        delete "like", to: "likes#destroy"
+        get "liked_users", to: "likes#liked_users"
+      end
+      resources :relationships, only: [ :create, :destroy ] do
+        collection do
+          get "check/:user_id", to: "relationships#check"
+        end
+      end
     end
   end
 end

@@ -18,13 +18,24 @@ class Api::V1::RelationshipsController < ApplicationController
       return
     end
 
-    @current_user.follow(user)
-    render json: { message: "Successfully followed user", user: user }, status: :created
+    relationship = @current_user.follow(user)
+    render json: {
+      message: "Successfully followed user",
+      user: user,
+      relationshipId: relationship.id
+    }, status: :created
   end
 
   sig { void }
   def destroy
-    user = Relationship.find_by(id: params[:id])&.followed
+    # relationshipのIDまたはfollowed_idのどちらかで関係を検索
+    relationship = if params[:id].present?
+                    Relationship.find_by(id: params[:id])
+                  elsif params[:followed_id].present?
+                    @current_user.active_relationships.find_by(followed_id: params[:followed_id])
+                  end
+
+    user = relationship&.followed
 
     if user.nil?
       render json: { error: "Relationship not found" }, status: :not_found
@@ -33,6 +44,20 @@ class Api::V1::RelationshipsController < ApplicationController
 
     @current_user.unfollow(user)
     render json: { message: "Successfully unfollowed user" }, status: :ok
+  end
+
+  sig { void }
+  def check
+    user = User.find(params[:user_id])
+
+    if @current_user.following?(user)
+      relationship = @current_user.active_relationships.find_by(followed_id: user.id)
+      render json: { isFollowing: true, relationshipId: relationship.id }, status: :ok
+    else
+      render json: { isFollowing: false }, status: :ok
+    end
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: "User not found" }, status: :not_found
   end
 
   sig { void }

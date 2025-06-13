@@ -6,20 +6,31 @@ class Api::V1::PostsController < ApplicationController
 
   sig { void }
   def index
-    posts = Post.includes(:user).order(created_at: :desc).all
-    render json: posts.as_json(include: { user: { only: [ :id, :name ] } }), status: :ok
+    posts = Post.includes(:user, :likes).order(created_at: :desc).all
+    render json: posts.map { |post| post_data(post) }, status: :ok
   end
 
   sig { void }
   def user_posts
-    posts = Post.includes(:user).where(user_id: params[:user_id]).order(created_at: :desc)
-    render json: posts.as_json(include: { user: { only: [ :id, :name ] } }), status: :ok
+    posts = Post.includes(:user, :likes).where(user_id: params[:user_id]).order(created_at: :desc)
+    render json: posts.map { |post| post_data(post) }, status: :ok
+  end
+
+  sig { void }
+  def following_posts
+    # フォロー中のユーザーIDを取得
+    following_ids = @current_user.following.pluck(:id)
+    # フォロー中のユーザーと自分自身の投稿を取得
+    posts = Post.includes(:user, :likes)
+                .where(user_id: [following_ids, @current_user.id].flatten)
+                .order(created_at: :desc)
+    render json: posts.map { |post| post_data(post) }, status: :ok
   end
 
   sig { void }
   def show
-    post = Post.includes(:user).find(params[:id])
-    render json: post.as_json(include: { user: { only: [ :id, :name ] } }), status: :ok
+    post = Post.includes(:user, :likes).find(params[:id])
+    render json: post_data(post), status: :ok
   rescue ActiveRecord::RecordNotFound
     render json: { error: "Post not found" }, status: :not_found
   end
@@ -66,5 +77,21 @@ class Api::V1::PostsController < ApplicationController
   sig { returns(T::Hash[Symbol, T.untyped]) }
   def post_params
     params.require(:post).permit(:content).to_h
+  end
+
+  sig { params(post: Post).returns(T::Hash[Symbol, T.untyped]) }
+  def post_data(post)
+    {
+      id: post.id,
+      content: post.content,
+      created_at: post.created_at,
+      updated_at: post.updated_at,
+      user: {
+        id: post.user.id,
+        name: post.user.name
+      },
+      likes_count: post.likes_count,
+      liked_by_current_user: @current_user.liked?(post)
+    }
   end
 end

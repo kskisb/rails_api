@@ -22,7 +22,7 @@ class Api::V1::PostsController < ApplicationController
     following_ids = @current_user.following.pluck(:id)
     # フォロー中のユーザーと自分自身の投稿を取得
     posts = Post.includes(:user, :likes)
-                .where(user_id: [following_ids, @current_user.id].flatten)
+                .where(user_id: [ following_ids, @current_user.id ].flatten)
                 .order(created_at: :desc)
     render json: posts.map { |post| post_data(post) }, status: :ok
   end

@@ -1,7 +1,7 @@
 # typed: true
 
 class Api::V1::UsersController < ApplicationController
-  before_action :authenticate, except: [:create]
+  before_action :authenticate, except: [ :create ]
   extend T::Sig
 
   sig { void }

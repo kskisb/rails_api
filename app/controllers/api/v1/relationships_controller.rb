@@ -30,10 +30,10 @@ class Api::V1::RelationshipsController < ApplicationController
   def destroy
     # relationshipのIDまたはfollowed_idのどちらかで関係を検索
     relationship = if params[:id].present?
-                    Relationship.find_by(id: params[:id])
-                  elsif params[:followed_id].present?
-                    @current_user.active_relationships.find_by(followed_id: params[:followed_id])
-                  end
+      Relationship.find_by(id: params[:id])
+    elsif params[:followed_id].present?
+      @current_user.active_relationships.find_by(followed_id: params[:followed_id])
+    end
 
     user = relationship&.followed
 

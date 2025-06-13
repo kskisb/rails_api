@@ -1,7 +1,7 @@
 # typed: true
 
 class Api::V1::RelationshipsController < ApplicationController
-  before_action :authenticate, only: [ :create, :destroy ]
+  before_action :authenticate
   extend T::Sig
 
   sig { void }

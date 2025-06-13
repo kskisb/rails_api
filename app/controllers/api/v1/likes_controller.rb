@@ -1,7 +1,7 @@
 # typed: true
 
 class Api::V1::LikesController < ApplicationController
-  before_action :authenticate, only: [ :create, :destroy ]
+  before_action :authenticate
   before_action :set_post, only: [ :create, :destroy ]
   extend T::Sig
 

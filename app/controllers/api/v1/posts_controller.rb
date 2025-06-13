@@ -1,7 +1,7 @@
 # typed: true
 
 class Api::V1::PostsController < ApplicationController
-  before_action :authenticate, only: [ :create, :update, :destroy ]
+  before_action :authenticate
   extend T::Sig
 
   sig { void }

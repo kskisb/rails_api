@@ -49,6 +49,9 @@ module GeneratedPathHelpersModule
   def followers_api_v1_user_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def following_api_v1_posts_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def following_api_v1_user_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }

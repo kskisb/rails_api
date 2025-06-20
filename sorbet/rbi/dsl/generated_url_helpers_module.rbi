@@ -49,6 +49,9 @@ module GeneratedUrlHelpersModule
   def followers_api_v1_user_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def following_api_v1_posts_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def following_api_v1_user_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }

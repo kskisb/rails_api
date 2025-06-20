@@ -12,6 +12,9 @@ class User < ApplicationRecord
   has_many :followers, through: :passive_relationships, source: :follower
   has_many :likes, dependent: :destroy
   has_many :liked_posts, through: :likes, source: :post
+  has_many :sent_conversations, foreign_key: :sender_id, class_name: "Conversation"
+  has_many :received_conversations, foreign_key: :recipient_id, class_name: "Conversation"
+  has_many :messages
 
   before_save { self.email = T.must(email).downcase }
   has_secure_password
@@ -44,5 +47,9 @@ class User < ApplicationRecord
 
   def liked?(post)
     liked_posts.include?(post)
+  end
+
+  def conversations
+    Conversation.where("sender_id = ? OR recipient_id = ?", id, id)
   end
 end

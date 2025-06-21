@@ -29,6 +29,10 @@ Rails.application.routes.draw do
           get "check/:user_id", to: "relationships#check"
         end
       end
+
+      resources :conversations, only: [:index, :show, :create] do
+        resources :messages, only: [:create]
+      end
     end
   end
 end

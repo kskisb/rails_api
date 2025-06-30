@@ -30,8 +30,8 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :conversations, only: [:index, :show, :create] do
-        resources :messages, only: [:create]
+      resources :conversations, only: [ :index, :show, :create ] do
+        resources :messages, only: [ :create ]
       end
     end
   end

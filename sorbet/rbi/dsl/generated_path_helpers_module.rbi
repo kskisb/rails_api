@@ -13,6 +13,15 @@ module GeneratedPathHelpersModule
   def api_v1_auth_login_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def api_v1_conversation_messages_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def api_v1_conversation_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def api_v1_conversations_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def api_v1_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }

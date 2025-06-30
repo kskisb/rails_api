@@ -13,6 +13,15 @@ module GeneratedUrlHelpersModule
   def api_v1_auth_login_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def api_v1_conversation_messages_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def api_v1_conversation_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def api_v1_conversations_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def api_v1_post_like_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }

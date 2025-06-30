@@ -436,6 +436,20 @@ class User
     def likes=(value); end
 
     sig { returns(T::Array[T.untyped]) }
+    def message_ids; end
+
+    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
+    def message_ids=(ids); end
+
+    # This method is created by ActiveRecord on the `User` class because it declared `has_many :messages`.
+    # 🔗 [Rails guide for `has_many` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-association)
+    sig { returns(::Message::PrivateCollectionProxy) }
+    def messages; end
+
+    sig { params(value: T::Enumerable[::Message]).void }
+    def messages=(value); end
+
+    sig { returns(T::Array[T.untyped]) }
     def passive_relationship_ids; end
 
     sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
@@ -462,6 +476,34 @@ class User
 
     sig { params(value: T::Enumerable[::Post]).void }
     def posts=(value); end
+
+    sig { returns(T::Array[T.untyped]) }
+    def received_conversation_ids; end
+
+    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
+    def received_conversation_ids=(ids); end
+
+    # This method is created by ActiveRecord on the `User` class because it declared `has_many :received_conversations`.
+    # 🔗 [Rails guide for `has_many` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-association)
+    sig { returns(::Conversation::PrivateCollectionProxy) }
+    def received_conversations; end
+
+    sig { params(value: T::Enumerable[::Conversation]).void }
+    def received_conversations=(value); end
+
+    sig { returns(T::Array[T.untyped]) }
+    def sent_conversation_ids; end
+
+    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
+    def sent_conversation_ids=(ids); end
+
+    # This method is created by ActiveRecord on the `User` class because it declared `has_many :sent_conversations`.
+    # 🔗 [Rails guide for `has_many` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-association)
+    sig { returns(::Conversation::PrivateCollectionProxy) }
+    def sent_conversations; end
+
+    sig { params(value: T::Enumerable[::Conversation]).void }
+    def sent_conversations=(value); end
   end
 
   module GeneratedAssociationRelationMethods

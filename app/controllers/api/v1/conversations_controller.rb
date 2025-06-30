@@ -1,3 +1,5 @@
+# typed: true
+
 class Api::V1::ConversationsController < ApplicationController
   before_action :authenticate
   extend T::Sig
@@ -43,8 +45,8 @@ class Api::V1::ConversationsController < ApplicationController
     render json: {
       id: conversation.id,
       other_user: {
-        id: other_user.id,
-        name: other_user.name
+        id: T.must(other_user).id,
+        name: T.must(other_user).name
       },
       messages: conversation.messages.includes(:user).order(created_at: :asc).map do |message|
         {
@@ -53,7 +55,7 @@ class Api::V1::ConversationsController < ApplicationController
           created_at: message.created_at,
           user_id: message.user_id,
           read: message.read,
-          user_name: message.user.name
+          user_name: T.must(message.user).name
         }
       end
     }, status: :ok

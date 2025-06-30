@@ -1,3 +1,5 @@
+# typed: true
+
 class Api::V1::MessagesController < ApplicationController
   before_action :authenticate
   before_action :set_conversation

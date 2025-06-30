@@ -10,14 +10,22 @@ class Api::V1::MessagesController < ApplicationController
     message.user = @current_user
 
     if message.save
-      render json: {
+      message_data = {
         id: message.id,
         body: message.body,
         created_at: message.created_at,
         user_id: message.user_id,
         read: message.read,
         user_name: @current_user.name
-      }, status: :created
+      }
+
+      # WebSocketで通知
+      ConversationChannel.broadcast_to(
+        @conversation,
+        message_data
+      )
+
+      render json: message_data, status: :created
     else
       render json: { errors: message.errors.full_messages }, status: :unprocessable_entity
     end
@@ -39,7 +47,7 @@ class Api::V1::MessagesController < ApplicationController
     end
   end
 
-  sig { returns(T::Hash[Symbol, T.untyped]) }
+  # sig { returns(T::Hash[Symbol, T.untyped]) }
   def message_params
     params.require(:message).permit(:body)
   end

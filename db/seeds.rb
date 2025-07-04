@@ -1,4 +1,4 @@
-10.times do |i|
+5.times do |i|
   user = User.create!(
     name: "user#{i + 1}",
     email: "user#{i + 1}@example.com",
@@ -6,9 +6,9 @@
     password_confirmation: "password123"
   )
 
-  5.times do |j|
+  3.times do |j|
     user.posts.create!(
-      content: "This is post #{j + 1} from #{user.name}."
+      content: "こんにちは、#{user.name} です。"
     )
   end
 end

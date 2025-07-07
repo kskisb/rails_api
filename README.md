@@ -1,5 +1,5 @@
 # Twitter Clone API
-この API は [twitter_clone](https://github.com/kskisb/twitter_clone) と [rails_api (インフラ)](https://github.com/kskisb/iac/tree/main/cdk/rails_api) と連動しています。次の流れでセットアップできます。
+この API は [twitter_clone (フロントエンド)](https://github.com/kskisb/twitter_clone) と [rails_api (インフラ)](https://github.com/kskisb/iac/tree/main/cdk/rails_api) と連動しています。次の流れでセットアップできます。
 
 ## セットアップ
 
